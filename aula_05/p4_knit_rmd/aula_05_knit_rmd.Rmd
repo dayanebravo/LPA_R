@@ -1,0 +1,32 @@
+---
+title: "aula_05_rmd"
+author: "Profª Dayane Bravo"
+date: "0000-00-00"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+## Renderização em vários formatos por meio do Knit!
+
+-   HTML
+
+-   PDF
+
+-   Word
+
+Fácil edição por meio do atalho "Visual".
+
+É possível compilar várias linguagens de programação em um mesmo documento.
+
+Python (sem executar):
+
+``` python
+print("oi em python")
+```
+
+R (executando):
+
+```{r}
+print("oi em R")
+```
