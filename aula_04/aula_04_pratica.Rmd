@@ -56,8 +56,15 @@ cat("Média de satisfação:", round(mean(avaliacoes), 1), "\n")
 
 
 ### 3. Vamos fazer a leitura de um arquivo csv e extrair algumas informações do
-### Dataset "https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition"
-### Limpo e disponível em "https://raw.githubusercontent.com/dayanebravo/LPA_R/refs/heads/main/aula_04/ObesityDataSet_raw_and_data_sinthetic.csv"
+### Dataset [Obesidade da UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition)
+### Limpo e disponível no [Github](https://raw.githubusercontent.com/dayanebravo/LPA_R/refs/heads/main/aula_04/ObesityDataSet_raw_and_data_sinthetic.csv)
+    Vamos calcular estatísticas básicas, gerar os gráficos de:
+    Distribuição da Classificação de Peso
+    Distribuição de Idade por Gênero
+    Relação entre Altura e Peso por Gênero
+    IMC Médio por Idade (criando IMC)
+    Exportar a nova tabela em csv
+
 ### Legenda das colunas: Gender: Gênero (Male/Female), Age: Idade em anos,
 ### Height: Altura em metros, Weight: Peso em kg, 
 ### family_history_with_overweight: Histórico familiar de sobrepeso (yes/no)
@@ -71,12 +78,6 @@ cat("Média de satisfação:", round(mean(avaliacoes), 1), "\n")
 ### CALC: Consumo de álcool (no/Sometimes/Frequently)
 ### MTRANS: Meio de transporte mais utilizado
 ### NObeyesdad: Classificação de peso (Target)
-    Calcular estatísticas básicas, gerar os gráficos de:
-    Distribuição da Classificação de Peso
-    Distribuição de Idade por Gênero
-    Relação entre Altura e Peso por Gênero
-    IMC Médio por Idade (criando IMC)
-    Exportar a nova tabela em csv
 
 ```{r}
 if(!require(ggplot2)) install.packages('ggplot2')
