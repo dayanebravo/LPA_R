@@ -1,0 +1,384 @@
+---
+title: "aula_03_pratica"
+author: "Prof. Dayane Bravo"
+output: html_document
+---
+
+```{r setup}
+knitr::opts_chunk$set(echo = FALSE, eval=FALSE)
+```
+
+## Aula Prática 03
+
+### 1. Para os dados
+### idades <- c(18, 22, 15, 30, 25, 12, 28)
+### nomes <- c("Ana", "Carlos", "Beatriz", "Daniel", "Eduarda", "Fernando", "Gabriela")
+
+    a. Selecione os nomes das pessoas com idades entre 20 e 25 anos (inclusive)
+    b. Selecione as idades das pessoas cujos nomes começam com a letra "C" ou "D"
+
+```{r}
+# Dados
+idades <- c(18, 22, 15, 30, 25, 12, 28)
+nomes <- c("Ana", "Carlos", "Beatriz", "Daniel", "Eduarda", "Fernando", "Gabriela")
+
+# a. Seleção por idade
+condicao_idade <- idades >= 20 & idades <= 25
+nomes_selecionados <- nomes[condicao_idade]
+cat("Nomes com idades entre 20 e 25:", paste(nomes_selecionados, collapse = ", "), "\n")
+
+# b. Seleção por letra inicial
+condicao_inicial <- grepl("^C|^D", nomes)
+idades_selecionadas <- idades[condicao_inicial]
+cat("\nIdades de nomes que começam com C ou D:", paste(idades_selecionadas, collapse = ", "), "\n")
+```
+
+
+
+### 2. Crie um datafram estoque com
+### produto = c("Notebook", "Tablet", "Smartphone", "Mouse", "Teclado"),
+### quantidade = c(10, 5, 8, 15, 7),
+### preco = c(3500, 1500, 2200, 100, 200),
+### categoria = c("Eletrônico", "Eletrônico", "Telefonia", "Periférico", "Periférico")
+
+    a. Selecione os produtos com quantidade menor que 10 e preço maior que 1000.
+    b. Use subset() para selecionar apenas os produtos da categoria "Eletrônico", 
+    mostrando apenas as colunas produto e preco.
+
+
+
+```{r}
+# Dados
+estoque <- data.frame(
+  produto = c("Notebook", "Tablet", "Smartphone", "Mouse", "Teclado"),
+  quantidade = c(10, 5, 8, 15, 7),
+  preco = c(3500, 1500, 2200, 100, 200),
+  categoria = c("Eletronico", "Eletronico", "Telefonia", "Periferico", "Periferico")
+)
+
+# a. Seleção com condições combinadas
+condicao_quant_preco <- estoque$quantidade < 10 & estoque$preco > 1000
+produtos_selecionados <- estoque[condicao_quant_preco, ]
+cat("Produtos com quantidade < 10 e preço > 1000:\n")
+print(produtos_selecionados)
+
+# b. Uso de subset()
+eletronicos <- subset(estoque, 
+                     subset = categoria == "Eletronico", 
+                     select = c(produto, preco))
+cat("\nProdutos eletronicos (apenas nome e preco):\n")
+print(eletronicos)
+```
+
+
+
+### 3. Você possui um dataframe com as notas de 5 alunos em 4 atividades:
+
+```{r echo=TRUE}
+notas <- data.frame(
+  aluno = c("Ana", "Carlos", "Beatriz", "Daniel", "Eduarda"),
+  atividade_1 = c(8, 5, 7, 8, 9),
+  atividade_2 = c(7, 6, 8, 5, 8),
+  atividade_3 = c(6, 4, 9, 7, 7),
+  atividade_4 = c(9, 7, 8, 6, 8)
+)
+```
+
+    a. Calcular a média de cada aluno utilizando for
+    b. Identificar quais alunos tiveram média maior ou igual a 7
+    c. Contar quantos alunos ficaram abaixo da média em cada **atividade**
+
+```{r}
+# Criação do data frame com as notas
+notas <- data.frame(
+  aluno = c("Ana", "Carlos", "Beatriz", "Daniel", "Eduarda"),
+  atividade_1 = c(8, 5, 7, 8, 9),
+  atividade_2 = c(7, 6, 8, 5, 8),
+  atividade_3 = c(6, 4, 9, 7, 7),
+  atividade_4 = c(9, 7, 8, 6, 8)
+)
+
+cat("--- NOTAS ORIGINAIS ---")
+print(notas)
+
+# a. Calcular médias usando apenas for
+notas$media <- 0
+for (i in 1:nrow(notas)) {
+  soma <- 0   # zera o somatório para o próximo aluno
+  for (j in 2:5) {  # colunas 2 a 5 são as atividades
+    soma <- soma + notas[i, j]
+  }
+  notas$media[i] <- soma / 4   # calcula a média para cada aluno 
+}
+
+cat("\n--- NOTAS COM MEDIAS ---\n")
+print(notas)
+
+# b. Identificar alunos aprovados
+cat("\n--- ALUNOS APROVADOS ---\n")
+for (i in 1:nrow(notas)) {
+  if (notas$media[i] >= 7) {
+    cat(notas$aluno[i], "esta aprovado(a) com media", notas$media[i], "\n")
+  }
+}
+
+# c. Contar alunos com nota abaixo de 7 em cada atividade
+cat("\n--- DESEMPENHO POR ATIVIDADE ---\n")
+for (j in 2:5) {  # colunas das atividades
+  contador <- 0
+  for (i in 1:nrow(notas)) {
+    if (notas[i, j] < 7) {
+      contador <- contador + 1
+    }
+  }
+  nome_atividade <- names(notas)[j]   # nomes das colunas do 2 ao 5 do df
+  cat("Na", nome_atividade, ",", contador, "aluno(s) ficou(ram) abaixo de 7\n")
+}
+```
+
+
+
+
+
+
+
+### 4. Utilizando apenas estruturas de repetição e seleção e os dados abaixo
+
+```{r echo=TRUE}
+vendas <- data.frame(
+  vendedor = c("Alice", "Bruno", "Carla", "Diego", "Elena"),
+  jan = c(1500, 800, 1200, 600, 1800),
+  fev = c(1800, 900, 1100, 700, 1600),
+  mar = c(1600, 700, 1300, 1500, 900),
+  abr = c(2000, 1100, 1400, 800, 2100)
+)
+```
+
+    a. Calcular total de vendas por vendedor usando apenas loops
+    b. Calcular média mensal por vendedor
+    c. Classificar vendedores por desempenho usando if/else sendo:
+    Excelente se >= 1500, Bom se >= 1000, Regular se >= 700, Melhorar caso contrario
+    d. Identificar vendedores que bateram meta mensal (>= 1200) em todos os meses
+    e. Contar quantos meses cada vendedor ficou acima da meta
+
+
+```{r}
+# Dados
+vendas <- data.frame(
+  vendedor = c("Alice", "Bruno", "Carla", "Diego", "Elena"),
+  jan = c(1500, 800, 1200, 600, 1800),
+  fev = c(1800, 900, 1100, 700, 1600),
+  mar = c(1600, 700, 1300, 1500, 900),
+  abr = c(2000, 1100, 1400, 800, 2100)
+)
+
+cat("\n--- VENDAS ORIGINAIS ---\n")
+print(vendas)
+
+
+# a. Calcular total de vendas por vendedor usando apenas loops
+vendas$total <- 0
+for (i in 1:nrow(vendas)) {
+  soma <- 0
+  for (j in 2:5) {  # colunas 2 a 5 são os meses
+    soma <- soma + vendas[i, j]
+  }
+  vendas$total[i] <- soma
+}
+
+cat("\n--- VENDAS TOTAIS ---\n")
+print(vendas)
+
+
+# b. Calcular média mensal por vendedor
+vendas$media_mensal <- 0
+for (i in 1:nrow(vendas)) {
+  vendas$media_mensal[i] <- vendas$total[i] / 4
+}
+
+cat("\n--- MEDIA MENSAL VENDAS ---\n")
+print(vendas)
+
+# c. Classificar vendedores por desempenho usando if/else
+vendas$classificacao <- ""
+for (i in 1:nrow(vendas)) {
+  if (vendas$media_mensal[i] >= 1500) {
+    vendas$classificacao[i] <- "Excelente"
+  } else if (vendas$media_mensal[i] >= 1000) {
+    vendas$classificacao[i] <- "Bom"
+  } else if (vendas$media_mensal[i] >= 700) {
+    vendas$classificacao[i] <- "Regular"
+  } else {
+    vendas$classificacao[i] <- "Precisa Melhorar"
+  }
+}
+
+cat("\n--- ANALISE COMPLETA ---\n")
+print(vendas)
+
+# d. Identificar vendedores que bateram meta mensal (>= 1200) em todos os meses
+cat("\n--- VENDEDORES QUE SEMPRE BATERAM META ---\n")
+for (i in 1:nrow(vendas)) {
+  bateu_meta <- TRUE
+  for (j in 2:5) {  # verificar todos os meses
+    if (vendas[i, j] < 1200) {
+      bateu_meta <- FALSE
+      break  # sai do loop interno se não bateu meta
+    }
+  }
+  
+  if (bateu_meta == TRUE) {
+    cat(vendas$vendedor[i], "bateu a meta todos os meses!\n")
+  }
+}
+
+# e. Contar quantos meses cada vendedor ficou acima da meta
+cat("\n--- MESES ACIMA DA META POR VENDEDOR ---\n")
+for (i in 1:nrow(vendas)) {
+  meses_acima <- 0
+  for (j in 2:5) {
+    if (vendas[i, j] > 1200) {
+      meses_acima <- meses_acima + 1
+    }
+  }
+  cat(vendas$vendedor[i], "ficou", meses_acima, "mes(es) acima da meta\n")
+}
+```
+
+
+
+
+### 5. Refaça o exemplo anterior utilizando as estruturas while e repeat
+#### EXTRA: Faça a busca por vendedor específico usando while
+
+```{r}
+# Dados
+vendas <- data.frame(
+  vendedor = c("Alice", "Bruno", "Carla", "Diego", "Elena"),
+  jan = c(1500, 800, 1200, 600, 1800),
+  fev = c(1800, 900, 1100, 700, 1600),
+  mar = c(1600, 700, 1300, 1500, 900),
+  abr = c(2000, 1100, 1400, 800, 2100)
+)
+
+cat("\n--- VENDAS ORIGINAIS ---\n")
+print(vendas)
+
+# a. Calcular total de vendas por vendedor usando while
+vendas$total <- 0
+i <- 1
+while (i <= nrow(vendas)) {
+  soma <- 0
+  for (j in 2:5) {  # colunas 2 a 5 são os meses
+    soma <- soma + vendas[i, j]
+  }
+  vendas$total[i] <- soma
+  i <- i + 1
+}
+
+cat("\n--- VENDAS TOTAIS ---\n")
+print(vendas)
+
+
+# b. Calcular média mensal por vendedor usando repeat
+vendas$media_mensal <- 0
+i <- 1
+repeat {
+  vendas$media_mensal[i] <- vendas$total[i] / 4
+  i <- i + 1
+  if (i > nrow(vendas)) {
+    break
+  }
+}
+
+cat("\n--- MEDIA MENSAL VENDAS ---\n")
+print(vendas)
+
+
+# c. Classificar vendedores por desempenho usando while
+vendas$classificacao <- ""
+i <- 1
+while (i <= nrow(vendas)) {
+  if (vendas$media_mensal[i] >= 1500) {
+    vendas$classificacao[i] <- "Excelente"
+  } else if (vendas$media_mensal[i] >= 1000) {
+    vendas$classificacao[i] <- "Bom"
+  } else if (vendas$media_mensal[i] >= 700) {
+    vendas$classificacao[i] <- "Regular"
+  } else {
+    vendas$classificacao[i] <- "Precisa Melhorar"
+  }
+  i <- i + 1
+}
+
+cat("\n--- ANALISE COMPLETA ---")
+print(vendas)
+
+# d. Identificar vendedores que bateram meta usando repeat
+cat("\n--- VENDEDORES QUE SEMPRE BATERAM META ---\n")
+i <- 1
+repeat {
+  bateu_meta <- TRUE
+
+  # Loop interno para verificar todos os meses
+  for (j in 2:5) {
+    if (vendas[i, j] < 1200) {
+      bateu_meta <- FALSE
+      break  # sai do loop interno
+    }
+  }
+  
+  if (bateu_meta == TRUE) {
+    cat(vendas$vendedor[i], "bateu a meta todos os meses!\n")
+  }
+  
+  i <- i + 1
+  if (i > nrow(vendas)) {
+    break  # sai do repeat
+  }
+}
+
+# e. Contar meses abaixo da meta usando while
+cat("\n--- MESES ABAIXO DA META POR VENDEDOR ---\n")
+i <- 1
+while (i <= nrow(vendas)) {
+  meses_abaixo <- 0
+  j <- 2
+  
+  # Loop interno com repeat para contar meses
+  repeat {
+    if (vendas[i, j] < 1200) {
+      meses_abaixo <- meses_abaixo + 1
+    }
+    j <- j + 1
+    if (j > 5) {
+      break
+    }
+  }
+  
+  cat(vendas$vendedor[i], "ficou", meses_abaixo, "mes(es) abaixo da meta\n")
+  i <- i + 1
+}
+
+
+# f. Exemplo adicional: Busca por vendedor específico usando while
+cat("\n--- BUSCA POR VENDEDOR ---\n")
+vendedor_procurado <- "Carla"
+i <- 1
+encontrou <- FALSE
+
+while (i <= nrow(vendas) && encontrou == FALSE) {
+  if (vendas$vendedor[i] == vendedor_procurado) {
+    cat("Vendedor(a)", vendedor_procurado, "encontrado(a) na posicao", i, "\n")
+    cat("Total de vendas:", vendas$total[i], "\n")
+    cat("Classificacao:", vendas$classificacao[i], "\n")
+    encontrou <- TRUE
+  }
+  i <- i + 1
+}
+
+if (encontrou == FALSE) {
+  cat("Vendedor(a)", vendedor_procurado, "nao encontrado(a)!\n")
+}
+```
+
