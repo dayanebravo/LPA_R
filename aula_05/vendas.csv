@@ -1,0 +1,9 @@
+id,produto,regiao,valor,quantidade
+1,Notebook,Sul,3500,5
+2,Smartphone,Nordeste,1500,12
+3,Tablet,Sudeste,1200,8
+4,Monitor,Norte,800,15
+5,Teclado,Sul,150,20
+6,Mouse,Sudeste,80,30
+7,Impressora,Nordeste,600,7
+8,Headset,Sudeste,200,18
