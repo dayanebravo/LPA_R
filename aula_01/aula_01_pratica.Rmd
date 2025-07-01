@@ -1,0 +1,179 @@
+---
+title: "aula_01_pratica"
+author: "Prof. Dayane Bravo"
+output: html_document
+---
+
+```{r setup}
+knitr::opts_chunk$set(echo = FALSE, eval=FALSE)
+```
+
+## Aula Prática 01
+
+### 1. Usando a funcao runif() gere 30 números aleatórios entre -5 e 5
+### alternando a posicao dos argumentos da funcao.
+
+```{r}
+# Ajuda funcao runif
+?runif
+
+# Forma padrao
+numeros_5a5 <- runif(30, -5, 5)
+print(numeros_5a5)
+
+# Alternando posicao dos argumentos
+numeros_5a5_alt <- runif(30, max = 5, min = -5)
+cat("\nPosicao alterada:\n")
+print(numeros_5a5_alt)
+```
+
+
+
+### 2. Veja o help de "runif" e "sample"
+
+```{r, eval=FALSE}
+# Para ver o help
+help("runif")
+# ou
+?sample
+```
+
+
+
+### 3. Crie uma funcao para fazer a soma de dois números: x e y
+
+```{r}
+# Funcao para somar dois numeros
+soma <- function(x, y) {
+  resultado <- x + y
+  return(resultado)
+}
+
+# Testando a funcao
+print(soma(5, 3))
+print(soma(10, 25))
+```
+
+
+
+### 4. Crie uma funcao para simular a jogada de um dado de 6 faces.
+
+```{r}
+# Ajuda funcao sample
+?sample
+
+# Funcao para simular jogada de um dado (1 a 6)
+jogar_dado <- function() {
+  resultado <- sample(1:6, 1)
+  return(resultado)
+}
+
+# Testando a funcao
+print(paste("Resultado da jogada:", jogar_dado()))
+print(paste("Resultado da jogada:", jogar_dado()))
+print(paste("Resultado da jogada:", jogar_dado()))
+```
+
+
+
+### 5. Crie uma funcao para simular a jogada de dois dados de 6 faces cada.
+### calcule a soma dos resultados
+
+```{r}
+# Funcao para simular jogada de dois dados
+jogar_dois_dados <- function() {
+  dado1 <- sample(1:6, 1)
+  dado2 <- sample(1:6, 1)
+  soma_total <- sum(dado1, dado2)
+  
+  cat("Dado_1:", dado1, "\n")
+  cat("Dado_2:", dado2, "\n")
+  cat("Soma:", soma_total, "\n")
+  
+}
+
+# Testando a funcao
+print("Primeira jogada:")
+jogar_dois_dados()
+print("Segunda jogada:")
+jogar_dois_dados()
+```
+
+
+
+### 6. Crie uma funcao para simular a jogada de n dados de 6 faces cada.
+### calcule a soma dos resultados
+
+```{r}
+# Funcao para simular jogada de n dados
+jogar_n_dados <- function(n) {
+  if (n <= 0) {
+    stop("O numero de dados deve ser maior que zero")
+  }
+  
+  resultados <- sample(1:6, n, replace = TRUE)
+  soma_total <- sum(resultados)
+  
+  cat("Numero de dados:", n, "\n")
+  cat("Resultados:", paste(resultados, collapse = ", "), "\n")
+  cat("Soma total:", soma_total, "\n")
+  
+}
+
+# Testando a funcao
+print("Jogando 3 dados:")
+jogar_n_dados(3)
+
+print("Jogando 5 dados:")
+jogar_n_dados(5)
+
+print("Jogando 1 dado:")
+jogar_n_dados(1)
+```
+
+
+
+### 7. Crie uma função chamada "fatorial" que calcula o fatorial (n!)
+### de um número inteiro não negativo. 
+### Inclua comentários explicando cada parte da função e teste com o valor 5.
+
+```{r}
+# Definição: n! = n * (n-1) * ... * 2 * 1
+fatorial <- function(n) {
+  if (n == 0) {
+    return(1)  # O fatorial de 0 é 1 por definição
+  } else {
+    resultado <- 1
+    for (i in 1:n) {  # Inicia um loop que irá iterar de 1 até n (inclusive)
+    # Multiplica o valor atual de 'resultado' pelo valor de 'i' em cada iteração
+      resultado <- resultado * i
+    }
+    return(resultado)
+  }
+}
+
+resultado <- fatorial(5)
+print(resultado)  # Deve retornar 120 (5! = 5*4*3*2*1)
+```
+
+
+
+### 8. Crie uma função chamada "divisao_segura" que recebe dois números e retorna 
+### a divisão do primeiro pelo segundo, mas verifica se o divisor é zero 
+### antes de fazer a operação. 
+### Se for zero, retorne uma mensagem de erro.
+
+```{r}
+divisao_segura <- function(dividendo, divisor) {
+  if (divisor == 0) {
+    return("Erro: Divisão por zero não existe!")
+  } else {
+    return(dividendo/divisor)
+  }
+}
+
+resultado1 <- divisao_segura(10, 2)  # Deve retornar 5
+resultado2 <- divisao_segura(5, 0)   # Deve retornar a mensagem de erro
+print(resultado1)
+print(resultado2)
+```
