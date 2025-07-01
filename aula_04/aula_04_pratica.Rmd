@@ -1,0 +1,240 @@
+---
+title: "aula_04_pratica"
+author: "Prof. Dayane Bravo"
+output: html_document
+---
+
+```{r setup}
+knitr::opts_chunk$set(echo = FALSE, eval=FALSE)
+```
+
+## Aula Prática 04
+
+### 1. Vamos registrar as temperaturas máximas de uma semana para análise climática com média, máxima e mínima.
+### Utilizar a função scan
+
+```{r}
+# Solução usando scan()
+cat("Registro de temperaturas máximas da semana (digite 7 valores):\n")
+temperaturas <- scan(n = 7)
+
+cat("\nTemperaturas registradas:\n")
+print(temperaturas)
+
+cat("\nMédia da semana:", mean(temperaturas), "°C\n")
+cat("Dia mais quente:", max(temperaturas), "°C\n")
+cat("Dia mais frio:", min(temperaturas), "°C\n")
+```
+
+
+
+
+### 2. Vamos Coletar avaliações de clientes sobre um novo produto, com notas entre 1 e 5.
+### Utilizar a função readline. Validar a entrada.
+
+```{r}
+# Solução usando readline() em loop
+n_clientes <- as.numeric(readline("Quantos clientes responderam? "))
+avaliacoes <- numeric(n_clientes)
+
+for(i in 1:n_clientes) {
+  prompt <- paste("Cliente", i, "- Avalie o produto (1-5): ")
+  avaliacoes[i] <- as.numeric(readline(prompt))
+  
+  # Validação da entrada
+  while(is.na(avaliacoes[i]) || avaliacoes[i] < 1 || avaliacoes[i] > 5) {
+    cat("Por favor, digite um valor entre 1 e 5\n")
+    avaliacoes[i] <- as.numeric(readline(prompt))
+  }
+}
+
+cat("\nResultados da pesquisa:\n")
+cat("Média de satisfação:", round(mean(avaliacoes), 1), "\n")
+```
+
+
+
+
+### 3. Vamos fazer a leitura de um arquivo csv e extrair algumas informações do
+### Dataset "https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition"
+### Limpo e disponível em "https://raw.githubusercontent.com/dayanebravo/LPA_R/refs/heads/main/aula_04/ObesityDataSet_raw_and_data_sinthetic.csv"
+### Legenda das colunas: Gender: Gênero (Male/Female), Age: Idade em anos,
+### Height: Altura em metros, Weight: Peso em kg, 
+### family_history_with_overweight: Histórico familiar de sobrepeso (yes/no)
+### FAVC: Consumo frequente de alimentos calóricos (yes/no).
+### FCVC: Frequência de consumo de vegetais (1-3)
+### NCP: Número de refeições principais por dia (1-4)
+### CAEC: Consumo de alimentos entre as refeições (Sometimes/Frequently/Always/no)
+### SMOKE: Fumante (yes/no), CH2O: Consumo diário de água (1-3),
+### SCC: Monitoramento de calorias (yes/no), FAF: Atividade física semanal (0-3)
+### TUE: Tempo usando dispositivos eletrônicos (0-2)
+### CALC: Consumo de álcool (no/Sometimes/Frequently)
+### MTRANS: Meio de transporte mais utilizado
+### NObeyesdad: Classificação de peso (Target)
+    Calcular estatísticas básicas, gerar os gráficos de:
+    Distribuição da Classificação de Peso
+    Distribuição de Idade por Gênero
+    Relação entre Altura e Peso por Gênero
+    IMC Médio por Idade (criando IMC)
+    Exportar a nova tabela em csv
+
+```{r}
+if(!require(ggplot2)) install.packages('ggplot2')
+if(!require(dplyr)) install.packages('dplyr')
+library(ggplot2)
+library(dplyr)
+
+
+url <- "https://raw.githubusercontent.com/dayanebravo/LPA_R/refs/heads/main/aula_04/ObesityDataSet_raw_and_data_sinthetic.csv"
+dados <- read.csv(url)
+
+# Visualizar estrutura dos dados
+str(dados)
+
+
+# Estatísticas descritivas para variáveis numéricas
+summary(dados[, c("Age", "Height", "Weight")])
+
+
+
+# Distribuição da Classificação de Peso (NObeyesdad)
+ggplot(dados, aes(x = NObeyesdad, fill = NObeyesdad)) +
+  geom_bar() +
+  labs(title = "Distribuição das Categorias de Peso",
+       x = "Classificação de Peso",
+       y = "Contagem") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+
+
+# Distribuição de Idade por Gênero
+ggplot(dados, aes(x = Age, fill = Gender)) +
+  geom_histogram(binwidth = 2, alpha = 0.7, position = "identity") +
+  labs(title = "Distribuição de Idade por Gênero",
+       x = "Idade",
+       y = "Contagem") +
+  theme_minimal() +
+  facet_wrap(~Gender, ncol = 1)
+
+
+
+# Relação entre Altura e Peso por Gênero
+ggplot(dados, aes(x = Height, y = Weight, color = Gender)) +
+  geom_point(alpha = 0.6) +
+  labs(title = "Relação entre Altura e Peso",
+       x = "Altura (m)",
+       y = "Peso (kg)") +
+  theme_minimal() +
+  geom_smooth(method = "lm", se = FALSE)
+
+
+
+# IMC Médio por Idade (criando IMC)
+dados <- dados %>% 
+  mutate(IMC = Weight / (Height^2))
+
+ggplot(dados, aes(x = Age, y = IMC, color = Gender)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "loess", se = TRUE) +
+  labs(title = "IMC por Idade e Gênero",
+       x = "Idade",
+       y = "IMC") +
+  theme_minimal()
+
+
+
+# Exportando para CSV
+caminho_arquivo_csv <- "C:/Users/fiasi/OneDrive/TCD - Linguagem de Prog Aplicada R/aula_04/dados_obesidade_csv.csv"
+write.csv(dados, file = caminho_arquivo_csv, row.names = FALSE)
+```
+
+
+
+### 4. Vamos explorar o dataset "mtcars" do R
+### Vamos fazer gráficos para a Distribuição de Cilindradas (cyl)
+### Distribuição de MPG (milhas por galão) por Tipo de Transmissão
+### Relação entre Peso (wt) e MPG
+### Potência (hp) por Número de Cilindros
+### Consumo (mpg) por Tipo de Transmissão e Número de Cilindros
+### Relação entre Potência, Peso e Cilindradas (gráfico de bolhas)
+
+```{r}
+data(mtcars)
+
+# Converter algumas variáveis para fator
+mtcars <- mtcars %>%
+  mutate(cyl = as.factor(cyl),
+         vs = as.factor(vs),
+         am = as.factor(am),
+         gear = as.factor(gear),
+         carb = as.factor(carb))
+
+# Visualizar estrutura dos dados
+str(mtcars)
+
+
+# Distribuição de Cilindradas (cyl)
+ggplot(mtcars, aes(x = cyl, fill = cyl)) +
+  geom_bar() +
+  labs(title = "Distribuição de Cilindradas",
+       x = "Número de Cilindros",
+       y = "Contagem") +
+  theme_minimal()
+
+
+# Distribuição de MPG (milhas por galão) por Tipo de Transmissão
+ggplot(mtcars, aes(x = mpg, fill = am)) +
+  geom_histogram(binwidth = 3, alpha = 0.7, position = "identity") +
+  labs(title = "Distribuição de MPG por Tipo de Transmissão",
+       x = "Milhas por Galão (mpg)",
+       y = "Contagem") +
+  theme_minimal() +
+  facet_wrap(~am, ncol = 1, labeller = as_labeller(c("0" = "Automático", "1" = "Manual")))
+
+
+# Relação entre Peso (wt) e MPG
+ggplot(mtcars, aes(x = wt, y = mpg, color = cyl)) +
+  geom_point(size = 3, alpha = 0.8) +
+  labs(title = "Relação entre Peso e Eficiência de Combustível",
+       x = "Peso (1000 lbs)",
+       y = "Milhas por Galão (mpg)") +
+  theme_minimal() +
+  geom_smooth(method = "lm", se = FALSE, color = "black")
+
+
+
+# Potência (hp) por Número de Cilindros
+ggplot(mtcars, aes(x = cyl, y = hp, fill = cyl)) +
+  geom_boxplot() +
+  labs(title = "Potência por Número de Cilindros",
+       x = "Número de Cilindros",
+       y = "Potência (hp)") +
+  theme_minimal()
+
+
+
+# Consumo (mpg) por Tipo de Transmissão e Número de Cilindros
+ggplot(mtcars, aes(x = cyl, y = mpg, fill = am)) +
+  geom_boxplot() +
+  labs(title = "Eficiência de Combustível por Cilindradas e Transmissão",
+       x = "Número de Cilindros",
+       y = "Milhas por Galão (mpg)",
+       fill = "Transmissão") +
+  theme_minimal() +
+  scale_fill_discrete(labels = c("Automático", "Manual"))
+
+
+
+# Relação entre Potência, Peso e Cilindradas (gráfico de bolhas)
+ggplot(mtcars, aes(x = hp, y = wt, size = mpg, color = cyl)) +
+  geom_point(alpha = 0.7) +
+  labs(title = "Relação entre Potência, Peso e Eficiência",
+       x = "Potência (hp)",
+       y = "Peso (1000 lbs)",
+       size = "MPG",
+       color = "Cilindros") +
+  theme_minimal() +
+  scale_size(range = c(3, 10))
+```
