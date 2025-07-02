@@ -1,0 +1,50 @@
+---
+title: "Boletins Escolares - Turma 2023"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE)
+library(ggplot2)
+library(knitr)
+
+# Carrega os dados
+notas <- read.csv("https://raw.githubusercontent.com/dayanebravo/LPA_R/refs/heads/main/aula_05/notas.csv")
+```
+
+## Resultados da Turma
+
+```{r processar_dados}
+# Calcula média e status para todos
+notas$media <- round(rowMeans(notas[, 2:5]), 2)
+notas$status <- ifelse(notas$media >= 6, "aprovado", "reprovado")
+```
+
+### Tabela Resumo
+```{r tabela_resumo}
+kable(notas, align = 'c', col.names = c("Aluno", "B1", "B2", "B3", "B4", "Média", "Status"))
+```
+
+### Desempenho Individual
+```{r graficos}
+for (i in 1:nrow(notas)) {
+  cat("Desempenho de", notas$aluno[i], "\n**Média:**", notas$media[i], "|", "**Status:**", notas$status[i], "\n")
+
+  # Gráfico por aluno
+  df <- data.frame(
+    Bimestre = paste0("B", 1:4),
+    Nota = unlist(notas[i, 2:5])
+  )
+  
+  print(
+    ggplot(df, aes(x = Bimestre, y = Nota, group = 1)) +
+      geom_line(color = "blue") +
+      geom_point(color = "red") +
+      ylim(0, 10) +
+      theme_minimal()
+  )
+  
+}
+```
+
+**Gerado em:** `r Sys.Date()`
