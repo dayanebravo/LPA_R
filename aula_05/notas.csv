@@ -1,6 +1,6 @@
-aluno;bimestre1;bimestre2;bimestre3;bimestre4
-Ana Silva;7.5;8;6.5;9
-Carlos Oliveira;5;6.5;7;8.5
-Maria Souza;8;7.5;9;8.5
-Joao Santos;4.5;5;6;7
-Laura Lima;9;8.5;9.5;10
+aluno,bimestre1,bimestre2,bimestre3,bimestre4
+Ana Silva,7.5,8.0,6.5,9.0
+Carlos Oliveira,5.0,6.5,7.0,8.5
+Maria Souza,8.0,7.5,9.0,8.5
+João Santos,4.5,5.0,6.0,7.0
+Laura Lima,9.0,8.5,9.5,10.0
