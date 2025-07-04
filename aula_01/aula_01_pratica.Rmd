@@ -1,35 +1,36 @@
 ---
-title: "aula_01_pratica"
-author: "Prof. Dayane Bravo"
-output: html_document
+title: "Aula Prática 01"
+author: "Profª Dayane Bravo"
+output:
+  html_document: default
+  pdf_document: default
 ---
 
-```{r setup}
-knitr::opts_chunk$set(echo = FALSE, eval=FALSE)
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE, eval = FALSE)
 ```
 
-## Aula Prática 01
 
-### 1. Usando a funcao runif() gere 30 números aleatórios entre -5 e 5
-### alternando a posicao dos argumentos da funcao.
+1. Usando a função runif() gere 30 números aleatórios entre -5 e 5
+alternando a posição dos argumentos da função.
 
 ```{r}
-# Ajuda funcao runif
+# Ajuda função runif
 ?runif
 
-# Forma padrao
+# Forma padrão
 numeros_5a5 <- runif(30, -5, 5)
 print(numeros_5a5)
 
-# Alternando posicao dos argumentos
+# Alternando posição dos argumentos
 numeros_5a5_alt <- runif(30, max = 5, min = -5)
-cat("\nPosicao alterada:\n")
+cat("\nPosição alterada:\n")
 print(numeros_5a5_alt)
 ```
 
 
 
-### 2. Veja o help de "runif" e "sample"
+2. Veja o help de "runif" e "sample"
 
 ```{r, eval=FALSE}
 # Para ver o help
@@ -40,35 +41,35 @@ help("runif")
 
 
 
-### 3. Crie uma funcao para fazer a soma de dois números: x e y
+3. Crie uma função para fazer a soma de dois números: x e y
 
 ```{r}
-# Funcao para somar dois numeros
+# Função para somar dois numeros
 soma <- function(x, y) {
   resultado <- x + y
   return(resultado)
 }
 
-# Testando a funcao
+# Testando a função
 print(soma(5, 3))
 print(soma(10, 25))
 ```
 
 
 
-### 4. Crie uma funcao para simular a jogada de um dado de 6 faces.
+4. Crie uma função para simular a jogada de um dado de 6 faces.
 
 ```{r}
-# Ajuda funcao sample
+# Ajuda função sample
 ?sample
 
-# Funcao para simular jogada de um dado (1 a 6)
+# Função para simular jogada de um dado (1 a 6)
 jogar_dado <- function() {
   resultado <- sample(1:6, 1)
   return(resultado)
 }
 
-# Testando a funcao
+# Testando a função
 print(paste("Resultado da jogada:", jogar_dado()))
 print(paste("Resultado da jogada:", jogar_dado()))
 print(paste("Resultado da jogada:", jogar_dado()))
@@ -76,11 +77,11 @@ print(paste("Resultado da jogada:", jogar_dado()))
 
 
 
-### 5. Crie uma funcao para simular a jogada de dois dados de 6 faces cada.
-### calcule a soma dos resultados
+5. Crie uma função para simular a jogada de dois dados de 6 faces cada.
+calcule a soma dos resultados
 
 ```{r}
-# Funcao para simular jogada de dois dados
+# Função para simular jogada de dois dados
 jogar_dois_dados <- function() {
   dado1 <- sample(1:6, 1)
   dado2 <- sample(1:6, 1)
@@ -92,7 +93,7 @@ jogar_dois_dados <- function() {
   
 }
 
-# Testando a funcao
+# Testando a função
 print("Primeira jogada:")
 jogar_dois_dados()
 print("Segunda jogada:")
@@ -101,11 +102,11 @@ jogar_dois_dados()
 
 
 
-### 6. Crie uma funcao para simular a jogada de n dados de 6 faces cada.
-### calcule a soma dos resultados
+6. Crie uma função para simular a jogada de n dados de 6 faces cada.
+calcule a soma dos resultados
 
 ```{r}
-# Funcao para simular jogada de n dados
+# Função para simular jogada de n dados
 jogar_n_dados <- function(n) {
   if (n <= 0) {
     stop("O numero de dados deve ser maior que zero")
@@ -120,7 +121,7 @@ jogar_n_dados <- function(n) {
   
 }
 
-# Testando a funcao
+# Testando a função
 print("Jogando 3 dados:")
 jogar_n_dados(3)
 
@@ -133,9 +134,9 @@ jogar_n_dados(1)
 
 
 
-### 7. Crie uma função chamada "fatorial" que calcula o fatorial (n!)
-### de um número inteiro não negativo. 
-### Inclua comentários explicando cada parte da função e teste com o valor 5.
+7. Crie uma função chamada "fatorial" que calcula o fatorial (n!)
+de um número inteiro não negativo. 
+Inclua comentários explicando cada parte da função e teste com o valor 5.
 
 ```{r}
 # Definição: n! = n * (n-1) * ... * 2 * 1
@@ -158,10 +159,10 @@ print(resultado)  # Deve retornar 120 (5! = 5*4*3*2*1)
 
 
 
-### 8. Crie uma função chamada "divisao_segura" que recebe dois números e retorna 
-### a divisão do primeiro pelo segundo, mas verifica se o divisor é zero 
-### antes de fazer a operação. 
-### Se for zero, retorne uma mensagem de erro.
+8. Crie uma função chamada "divisao_segura" que recebe dois números e retorna 
+a divisão do primeiro pelo segundo, mas verifica se o divisor é zero 
+antes de fazer a operação. 
+Se for zero, retorne uma mensagem de erro.
 
 ```{r}
 divisao_segura <- function(dividendo, divisor) {
