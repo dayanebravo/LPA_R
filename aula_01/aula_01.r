@@ -115,7 +115,6 @@ resultado_funcao_soma <- soma(4, 2)
 print(resultado_funcao_soma)
 
 
-
 ### ARGUMENTO (...) 
 # criando a função soma com o terceiro argumento
 soma_3_argumento <- function(valor_01, valor_02, ...) {
