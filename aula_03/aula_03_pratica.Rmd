@@ -1,18 +1,22 @@
 ---
-title: "aula_03_pratica"
-author: "Prof. Dayane Bravo"
-output: html_document
+title: "Aula Prática 03"
+author: "Profª Dayane Bravo"
+output:
+  html_document: default
+  pdf_document: default
 ---
 
-```{r setup}
-knitr::opts_chunk$set(echo = FALSE, eval=FALSE)
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = T, eval = FALSE)
 ```
 
-## Aula Prática 03
 
-### 1. Para os dados
-### idades <- c(18, 22, 15, 30, 25, 12, 28)
-### nomes <- c("Ana", "Carlos", "Beatriz", "Daniel", "Eduarda", "Fernando", "Gabriela")
+
+1. Para os dados
+
+    idades <- c(18, 22, 15, 30, 25, 12, 28)
+    
+    nomes <- c("Ana", "Carlos", "Beatriz", "Daniel", "Eduarda", "Fernando", "Gabriela")
 
     a. Selecione os nomes das pessoas com idades entre 20 e 25 anos (inclusive)
     b. Selecione as idades das pessoas cujos nomes começam com a letra "C" ou "D"
@@ -35,17 +39,16 @@ cat("\nIdades de nomes que começam com C ou D:", paste(idades_selecionadas, col
 
 
 
-### 2. Crie um datafram estoque com
-### produto = c("Notebook", "Tablet", "Smartphone", "Mouse", "Teclado"),
-### quantidade = c(10, 5, 8, 15, 7),
-### preco = c(3500, 1500, 2200, 100, 200),
-### categoria = c("Eletrônico", "Eletrônico", "Telefonia", "Periférico", "Periférico")
+2. Crie um dataframe estoque com:
+
+- produto = c("Notebook", "Tablet", "Smartphone", "Mouse", "Teclado"),
+- quantidade = c(10, 5, 8, 15, 7),
+- preco = c(3500, 1500, 2200, 100, 200),
+- categoria = c("Eletrônico", "Eletrônico", "Telefonia", "Periférico", "Periférico")
 
     a. Selecione os produtos com quantidade menor que 10 e preço maior que 1000.
     b. Use subset() para selecionar apenas os produtos da categoria "Eletrônico", 
     mostrando apenas as colunas produto e preco.
-
-
 
 ```{r}
 # Dados
@@ -72,7 +75,11 @@ print(eletronicos)
 
 
 
-### 3. Você possui um dataframe com as notas de 5 alunos em 4 atividades:
+3. Você possui um dataframe com as notas de 5 alunos em 4 atividades.
+
+    a. Calcule a média de cada aluno utilizando for
+    b. Identifique quais alunos tiveram média maior ou igual a 7
+    c. Conte quantos alunos ficaram abaixo da média em cada **atividade**
 
 ```{r echo=TRUE}
 notas <- data.frame(
@@ -84,9 +91,6 @@ notas <- data.frame(
 )
 ```
 
-    a. Calcular a média de cada aluno utilizando for
-    b. Identificar quais alunos tiveram média maior ou igual a 7
-    c. Contar quantos alunos ficaram abaixo da média em cada **atividade**
 
 ```{r}
 # Criação do data frame com as notas
@@ -138,12 +142,15 @@ for (j in 2:5) {  # colunas das atividades
 
 
 
+4. Utilizando apenas estruturas de repetição e seleção e os dados abaixo
 
-
-
-
-### 4. Utilizando apenas estruturas de repetição e seleção e os dados abaixo
-
+    a. Calcular total de vendas por vendedor usando apenas loops
+    b. Calcular média mensal por vendedor
+    c. Classificar vendedores por desempenho usando if/else sendo:
+    Excelente se >= 1500, Bom se >= 1000, Regular se >= 700, Melhorar caso contrario
+    d. Identificar vendedores que bateram meta mensal (>= 1200) em todos os meses
+    e. Contar quantos meses cada vendedor ficou acima da meta
+    
 ```{r echo=TRUE}
 vendas <- data.frame(
   vendedor = c("Alice", "Bruno", "Carla", "Diego", "Elena"),
@@ -153,13 +160,6 @@ vendas <- data.frame(
   abr = c(2000, 1100, 1400, 800, 2100)
 )
 ```
-
-    a. Calcular total de vendas por vendedor usando apenas loops
-    b. Calcular média mensal por vendedor
-    c. Classificar vendedores por desempenho usando if/else sendo:
-    Excelente se >= 1500, Bom se >= 1000, Regular se >= 700, Melhorar caso contrario
-    d. Identificar vendedores que bateram meta mensal (>= 1200) em todos os meses
-    e. Contar quantos meses cada vendedor ficou acima da meta
 
 
 ```{r}
@@ -247,9 +247,9 @@ for (i in 1:nrow(vendas)) {
 
 
 
-
-### 5. Refaça o exemplo anterior utilizando as estruturas while e repeat
-#### EXTRA: Faça a busca por vendedor específico usando while
+5. Refaça o exemplo anterior utilizando as estruturas while e repeat
+    
+    EXTRA: Faça a busca por vendedor específico usando while
 
 ```{r}
 # Dados
