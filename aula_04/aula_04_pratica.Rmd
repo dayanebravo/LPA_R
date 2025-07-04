@@ -1,17 +1,19 @@
 ---
-title: "aula_04_pratica"
-author: "Prof. Dayane Bravo"
-output: html_document
+title: "Aula Prática 04"
+author: "Profª Dayane Bravo"
+output:
+  pdf_document: default
+  html_document: default
 ---
 
-```{r setup}
-knitr::opts_chunk$set(echo = FALSE, eval=FALSE)
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE, eval = FALSE)
 ```
 
-## Aula Prática 04
 
-### 1. Vamos registrar as temperaturas máximas de uma semana para análise climática com média, máxima e mínima.
-### Utilizar a função scan
+
+1. Vamos registrar as temperaturas máximas de uma semana para análise climática 
+com média, máxima e mínima. Utilizaremos a função **scan**
 
 ```{r}
 # Solução usando scan()
@@ -28,9 +30,8 @@ cat("Dia mais frio:", min(temperaturas), "°C\n")
 
 
 
-
-### 2. Vamos Coletar avaliações de clientes sobre um novo produto, com notas entre 1 e 5.
-### Utilizar a função readline. Validar a entrada.
+2. Vamos coletar avaliações de clientes sobre um novo produto, com notas entre 1 e 5.
+Utilizaremos a função **readline**. Validar a entrada.
 
 ```{r}
 # Solução usando readline() em loop
@@ -54,30 +55,34 @@ cat("Média de satisfação:", round(mean(avaliacoes), 1), "\n")
 
 
 
+3. Vamos fazer a leitura de um arquivo csv e extrair algumas informações do
+Dataset [Obesidade da UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition).
 
-### 3. Vamos fazer a leitura de um arquivo csv e extrair algumas informações do
-### Dataset [Obesidade da UCI Machine Learning Repository](https://archive.ics.uci.edu/dataset/544/estimation+of+obesity+levels+based+on+eating+habits+and+physical+condition)
-### Limpo e disponível no [Github](https://raw.githubusercontent.com/dayanebravo/LPA_R/refs/heads/main/aula_04/ObesityDataSet_raw_and_data_sinthetic.csv)
-    Vamos calcular estatísticas básicas, gerar os gráficos de:
-    Distribuição da Classificação de Peso
-    Distribuição de Idade por Gênero
-    Relação entre Altura e Peso por Gênero
-    IMC Médio por Idade (criando IMC)
-    Exportar a nova tabela em csv
+    Limpo e disponível no [Github](https://raw.githubusercontent.com/dayanebravo/LPA_R/refs/heads/main/aula_04/ObesityDataSet_raw_and_data_sinthetic.csv).
+    
+    Vamos calcular estatísticas básicas e gerar os gráficos de:
+    
+- Distribuição da Classificação de Peso
+- Distribuição de Idade por Gênero
+- Relação entre Altura e Peso por Gênero
+- IMC Médio por Idade (criando IMC)
+- Exportar a nova tabela em csv
 
-### Legenda das colunas: Gender: Gênero (Male/Female), Age: Idade em anos,
-### Height: Altura em metros, Weight: Peso em kg, 
-### family_history_with_overweight: Histórico familiar de sobrepeso (yes/no)
-### FAVC: Consumo frequente de alimentos calóricos (yes/no).
-### FCVC: Frequência de consumo de vegetais (1-3)
-### NCP: Número de refeições principais por dia (1-4)
-### CAEC: Consumo de alimentos entre as refeições (Sometimes/Frequently/Always/no)
-### SMOKE: Fumante (yes/no), CH2O: Consumo diário de água (1-3),
-### SCC: Monitoramento de calorias (yes/no), FAF: Atividade física semanal (0-3)
-### TUE: Tempo usando dispositivos eletrônicos (0-2)
-### CALC: Consumo de álcool (no/Sometimes/Frequently)
-### MTRANS: Meio de transporte mais utilizado
-### NObeyesdad: Classificação de peso (Target)
+  **Legenda das colunas:**
+    
+- Gender: Gênero (Male/Female), Age: Idade em anos,
+- Height: Altura em metros, Weight: Peso em kg, 
+- family_history_with_overweight: Histórico familiar de sobrepeso (yes/no)
+- FAVC: Consumo frequente de alimentos calóricos (yes/no).
+- FCVC: Frequência de consumo de vegetais (1-3)
+- NCP: Número de refeições principais por dia (1-4)
+- CAEC: Consumo de alimentos entre as refeições (Sometimes/Frequently/Always/no)
+- SMOKE: Fumante (yes/no), CH2O: Consumo diário de água (1-3),
+- SCC: Monitoramento de calorias (yes/no), FAF: Atividade física semanal (0-3)
+- TUE: Tempo usando dispositivos eletrônicos (0-2)
+- CALC: Consumo de álcool (no/Sometimes/Frequently)
+- MTRANS: Meio de transporte mais utilizado
+- NObeyesdad: Classificação de peso (Target)
 
 ```{r}
 if(!require(ggplot2)) install.packages('ggplot2')
@@ -87,6 +92,7 @@ library(dplyr)
 
 
 url <- "https://raw.githubusercontent.com/dayanebravo/LPA_R/refs/heads/main/aula_04/ObesityDataSet_raw_and_data_sinthetic.csv"
+#url <- "ObesityDataSet_raw_and_data_sinthetic.csv"
 dados <- read.csv(url)
 
 # Visualizar estrutura dos dados
@@ -147,19 +153,20 @@ ggplot(dados, aes(x = Age, y = IMC, color = Gender)) +
 
 
 # Exportando para CSV
-caminho_arquivo_csv <- "C:/Users/fiasi/OneDrive/TCD - Linguagem de Prog Aplicada R/aula_04/dados_obesidade_csv.csv"
+caminho_arquivo_csv <- "dados_obesidade_csv.csv"
 write.csv(dados, file = caminho_arquivo_csv, row.names = FALSE)
 ```
 
 
 
-### 4. Vamos explorar o dataset "mtcars" do R
-### Vamos fazer gráficos para a Distribuição de Cilindradas (cyl)
-### Distribuição de MPG (milhas por galão) por Tipo de Transmissão
-### Relação entre Peso (wt) e MPG
-### Potência (hp) por Número de Cilindros
-### Consumo (mpg) por Tipo de Transmissão e Número de Cilindros
-### Relação entre Potência, Peso e Cilindradas (gráfico de bolhas)
+4. Vamos explorar o dataset "mtcars" do R. Vamos fazer gráficos para: 
+
+- Distribuição de Cilindradas (cyl)
+- Distribuição de MPG (milhas por galão) por Tipo de Transmissão
+- Relação entre Peso (wt) e MPG
+- Potência (hp) por Número de Cilindros
+- Consumo (mpg) por Tipo de Transmissão e Número de Cilindros
+- Relação entre Potência, Peso e Cilindradas (gráfico de bolhas)
 
 ```{r}
 data(mtcars)
