@@ -1,21 +1,20 @@
 ---
-title: "aula_02_pratica"
-author: "Prof. Dayane Bravo"
-output: html_document
+title: "Aula Prática 02"
+author: "Profª Dayane Bravo"
+output:
+  html_document: default
+  pdf_document: default
 ---
 
-```{r setup}
-knitr::opts_chunk$set(echo = FALSE, eval=FALSE)
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = T, eval = FALSE)
 ```
 
-## Aula Prática 02
 
-### 1. Demonstre o erro de ponto flutuante calculando a expressão
-### (0.1 + 0.2) - 0.3
-
-    a. Mostre o resultado bruto da operação
-    b. Mostre o resultado arredondado para 15 casas decimais
-    c. Explique por que ocorre a diferença entre os resultados
+1.  Analise o erro de ponto flutuante calculando a expressão **(0.1 + 0.2) - 0.3**
+    a.  Mostre o resultado bruto da operação
+    b.  Mostre o resultado arredondado para 15 casas decimais
+    c.  Pesquise por que ocorre a diferença entre os resultados
 
 ```{r}
 resultado <- (0.1 + 0.2) - 0.3
@@ -24,13 +23,14 @@ print(round(resultado, digits = 15))  # Resultado arredondado
 print("Ocorre devido a representacao binaria de numeros decimais em sistemas computacionais") # Explicacao
 ```
 
-### 2. Dados os vetores:
-### a <- c(1, 3, 5, 7, 9, 11)
-### b <- c(2, 4)
 
-    a. Realize as operações a+b, a-b, a*b e a/b e analise os resultados
-    b. Crie um vetor c de tamanho 5 e repita a operação a+c (apenas os 
-    5 primeiros elementos de a)
+2.  Dados os vetores:
+
+    a <- c(1, 3, 5, 7, 9, 11)
+    
+    b <- c(2, 4)
+    
+    Realize as operações a + b, a - b, a * b e a / b. Analise os resultados
 
 ```{r}
 a <- c(1, 3, 5, 7, 9, 11)
@@ -40,19 +40,13 @@ cat("Soma\n", a + b, "\n")
 cat("\nSubtracao\n", a - b, "\n")  
 cat("\nMultiplicacao\n", a * b, "\n")  
 cat("\nDivisao\n", a / b, "\n")  
-
-c <- c(1, 2, 3, 4, 5)
-a_5elem <- a[1:5]    # Usando apenas os 5 primeiros elementos de a
-cat("\nSoma a+c\n", a_5elem + c, "\n")  
 ```
 
 
-
-### 3. Crie uma matriz 4x3 preenchida por linha com os números de 1 a 12. 
-
-    a. Acesse o elemento na 3ª linha, 2ª coluna
-    b. Substitua o valor 7 por 99
-    c. Extraia a submatriz formada pelas linhas 2 e 4 e colunas 1 e 3
+3.  Crie uma matriz 4x3 preenchida por linha com os números de 1 a 12.
+    a.  Acesse o elemento na 3ª linha, 2ª coluna
+    b.  Substitua o valor 7 por 99
+    c.  Extraia a submatriz formada pelas linhas 2 e 4 e colunas 1 e 3
 
 ```{r}
 matriz <- matrix(1:12, nrow = 4, ncol = 3, byrow = TRUE)
@@ -73,19 +67,20 @@ print(submat)
 ```
 
 
+4.  Dadas as matrizes:
 
-### 4. Dadas as matrizes:
-### A <- matrix(c(2,4,3,1,5,7), nrow=2, byrow = TRUE)
-### B <- matrix(c(1,3,0,2,4,3), nrow=2, byrow = TRUE)
+    A <- matrix(c(2, 4, 3, 1, 5, 7), nrow = 2, byrow = TRUE)
 
-    a. Calcule A+B
-    b. Realize a multiplicação matricial de A por B transposta (A %*% t(B))
-    c. Calcule a multiplicação elemento a elemento
-    d. Calcule a matriz transposta de A
+    B <- matrix(c(1, 3, 0, 2, 4, 3), nrow = 2, byrow = TRUE)
+
+    a.  Calcule A + B
+    b.  Realize a multiplicação matricial de A por B transposta (A %*% t(B))
+    c.  Calcule a multiplicação elemento a elemento
+    d.  Calcule a matriz transposta de A
 
 ```{r}
-A <- matrix(c(2,4,3,1,5,7), nrow=2, byrow = TRUE)
-B <- matrix(c(1,3,0,2,4,3), nrow=2, byrow = TRUE)
+A <- matrix(c(2, 4, 3, 1, 5, 7), nrow = 2, byrow = TRUE)
+B <- matrix(c(1, 3, 0, 2, 4, 3), nrow = 2, byrow = TRUE)
 
 # a. Soma
 soma <- A + B
@@ -109,19 +104,18 @@ print(transposta)
 ```
 
 
+5.  Crie um array tridimensional representando: 
+- 1ª dimensão: 2 professores 
+- 2ª dimensão: 3 alunos por professor 
+- 3ª dimensão: 3 tipos de avaliações 
+    
+    Preencha as notas com valores de uma amostra de 6 até 10 (com reposição).
+    Nomeie todas as dimensões
 
-
-### 5. Crie um array tridimensional representando:
-### 1ª dimensão: 2 professores
-### 2ª dimensão: 3 alunos por professor
-### 3ª dimensão: 3 tipos de avaliações
-### Preencha as notas com valores de uma amostra de 6 até 10 (com reposição)
-### Nomeie todas as dimensões
-
-    a. Calcule a média de cada aluno por professor
-    b. Mostre todas as notas do segundo aluno
-    c. Modifique para 0 a nota da prova 2, aluno 2 e Prof 2.
-    d. Calcule a média de cada prova
+    a.  Calcule a média de cada aluno por professor
+    b.  Mostre todas as notas do segundo aluno
+    c.  Modifique para 0 a nota da prova 2, aluno 2 e Prof 2.
+    d.  Calcule a média de cada prova
 
 ```{r}
 # Criando o array de notas
@@ -160,22 +154,20 @@ print(media_geral_provas)
 ```
 
 
+6.  Crie uma lista chamada dados_empresa contendo: 
+- Funcionários: Vetor com os nomes ("Ana", "Carlos", "Beatriz") 
+- Remuneração: Matriz 2x3 com: 
 
+    **Linha 1**: Salários (5000, 4000, 4500)
+    
+    **Linha 2**: Bônus (500, 300, 450) 
+    
+- Empresa: Sublista com: Nome: "Tech Solutions"; Fundação: 2010; Ativa: TRUE
 
-### 6. Crie uma lista chamada dados_empresa contendo:
-### Funcionários: Vetor com os nomes ("Ana", "Carlos", "Beatriz")
-### Remuneração: Matriz 2x3 com:
-### Linha 1: Salários (5000, 4000, 4500)
-### Linha 2: Bônus (500, 300, 450)
-### Empresa: Sublista com:
-### Nome: "Tech Solutions"
-### Fundação: 2010
-### Ativa: TRUE
-
-    a. Acessar segundo funcionário
-    b. Calcular salário líquido do terceiro funcionário (salario + bonus)
-    c. Adicionar CNPJ 12.345.678/0001-99
-    d. Combinar com lista de departamentos ("TI", "RH", "Vendas")
+    a.  Acessar segundo funcionário
+    b.  Calcular salário líquido do terceiro funcionário (salario + bonus)
+    c.  Adicionar CNPJ 12.345.678/0001-99
+    d.  Combinar com lista de departamentos ("TI", "RH", "Vendas")
 
 ```{r}
 # Criar a lista
@@ -211,14 +203,11 @@ str(dados_completos)
 ```
 
 
-
-
-
-### 7.Crie um dataframe chamado estoque com:
-### Produtos: ("Notebook", "Tablet", "Smartphone")
-### Preços: (3500, 1500, 2200)
-### Quantidades: (15, 30, 25)
-### Categorias: ("Eletrônicos", "Eletrônicos", "Telefonia")
+7.  Crie um dataframe chamado estoque com: 
+- Produtos: ("Notebook", "Tablet", "Smartphone") 
+- Preços: (3500, 1500, 2200) 
+- Quantidades: (15, 30, 25) 
+- Categorias: ("Eletrônicos", "Eletrônicos", "Telefonia")
 
     a. Adicione uma coluna "valor_total" (preço * quantidade)
     b. Filtre apenas os produtos da categoria "Eletrônicos"
