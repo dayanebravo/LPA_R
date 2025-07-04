@@ -1,10 +1,10 @@
-################ TEMA 01 –  ENTRADA MANUAL DE DADOS ############################
+################ TEMA 01 -  ENTRADA MANUAL DE DADOS ############################
 
-### função scan
-# sintaxe básica
+### funcao scan
+# sintaxe basica
 scan(file = "", what = double(), nmax = -1, n = -1, sep = "", dec = ".", ...)
 
-# para várias entradas numéricas
+# para varias entradas numericas
 valores <- scan()
 # digitar os valores no console
 # parar com enter 2x
@@ -12,7 +12,7 @@ valores <- scan()
 print(valores)
 
 
-# para várias entradas de texto
+# para varias entradas de texto
 nomes <- scan(what = "character")
 # digitar os nomes no console
 # parar com enter 2x
@@ -28,63 +28,67 @@ print(valores_3)
 
 
 
-### função readine
-# entrada texto - única
+### funcao readine
+# entrada texto - unica
 nome <- readline("Digite seu nome: ")
 # digitar o nome no console
 
-print(paste("Olá,", nome))
+print(paste("Ola,", nome))
 
 
-# entrada número - única
+# entrada numero - unica
 idade <- as.numeric(readline("Digite sua idade: "))
 # digitar a idade no console
 
-print(paste("Você tem", idade, "anos."))
+print(paste("Voce tem", idade, "anos."))
 
 
 
 
 
-################ TEMA 02 –  IMPORTAÇÃO DE DADOS - ARQUIVOS ##################### 
+################ TEMA 02 -  IMPORTACAO DE DADOS - ARQUIVOS ##################### 
 
-### função read.table - do R Base
-# sintaxe básica
+### funcao read.table - do R Base
+# sintaxe basica
 read.table(file = "caminho", header = FALSE, sep = "", dec = ".", 
            na.strings = "NA", ...)
 
 
 # arquivo txt
-arquivo_texto_txt <- "C:/Users/fiasi/OneDrive/TCD - Linguagem de Prog Aplicada R/aula_04/arquivo_texto_txt.txt"
+arquivo_texto_txt <- "arquivo_texto_txt.txt"
+#arquivo_texto_txt <- "https://raw.githubusercontent.com/dayanebravo/LPA_R/refs/heads/main/aula_04/arquivo_texto_txt.txt"
 read.table(file = arquivo_texto_txt, header = TRUE, sep = "", dec = ".")
-# utilizar a barra normal e não a invertida no caminho da pasta
-# a última linha do arquivo deve ser vazia
+# utilizar a barra normal e nao a invertida no caminho da pasta
+# a ultima linha do arquivo deve ser vazia
 
 
-# arquivo csv
-arquivo_texto_csv <- "C:/Users/fiasi/OneDrive/TCD - Linguagem de Prog Aplicada R/aula_04/arquivo_texto_csv.csv"
+
+arquivo_texto_csv <- "arquivo_texto_csv.csv"
+#arquivo_texto_csv <- "https://raw.githubusercontent.com/dayanebravo/LPA_R/refs/heads/main/aula_04/arquivo_texto_csv.csv"
 read.table(arquivo_texto_csv, header = TRUE, sep = ";", dec = ".")
 # conferir o separador abrindo o arquivo com o bloco de notas
 
 
 
-### função read_excel
-# necessário instalar e carregar o pacote
-install.packages("readxl")
+### funcao read_excel
+# necessario instalar e carregar o pacote
+if(!require(readxl)) install.packages('readxl')
 library(readxl)
 
-# sintaxe básica
+# sintaxe basica
 read_excel(path = "caminho", sheet = NULL, range = NULL, col_names = TRUE, 
            col_types = NULL, na = "", ...)
 
-
 # arquivo xlsx
-planilha_xlsx <- "C:/Users/fiasi/OneDrive/TCD - Linguagem de Prog Aplicada R/aula_04/planilha_xlsx.xlsx"
+# =================== BAIXAR O ARQUIVO XLSX ================================
+# https://github.com/dayanebravo/LPA_R/blob/main/aula_04/planilha_xlsx.xlsx
+planilha_xlsx <- "planilha_xlsx.xlsx"
 read_excel(path = planilha_xlsx, sheet = NULL, range = NULL, col_names = TRUE, 
            col_types = NULL, na = "")
 
 
 # arquivo xlsx - especificando aba e intervalo
+excel_sheets(planilha_xlsx)  # Para listar o nome das abas
 read_excel(path = planilha_xlsx, sheet = "Nome_planilha_2", range = "A1:C4", 
            col_names = TRUE, col_types = NULL, na = "")
 
@@ -98,11 +102,11 @@ read_excel(path = planilha_xlsx, sheet = 3, range = NULL, col_names = TRUE,
 
 ### pacote openxlsx
 # instalar e carregar o pacote
-install.packages("openxlsx")
+if(!require(openxlsx)) install.packages('openxlsx')
 library(openxlsx)
 
 
-# sintaxe básica para leitura
+# sintaxe basica para leitura
 read.xlsx(xlsxFile = "caminho", sheet = 1, startRow = 1, 
           colNames = TRUE, rowNames = FALSE, ...)
 
@@ -112,27 +116,29 @@ read.xlsx(xlsxFile = planilha_xlsx, sheet = 4, startRow = 2, colNames = FALSE,
           rowNames = TRUE)
 
 
-################ TEMA 03 –  IMPORTAÇÃO DE DADOS – OUTROS FORMATOS ############## 
+################ TEMA 03 -  IMPORTACAO DE DADOS - OUTROS FORMATOS ############## 
 
 ### dados da web
 # limitando a quantidade de linhas
 URL_trabalhadores <- "https://raw.githubusercontent.com/dayanebravo/Est_Graf_py/refs/heads/main/Employee.csv"
+#URL_trabalhadores <- "Employee.csv"
 trabalhadores_10 <- read.csv(URL_trabalhadores, nrows = 10)
 print(trabalhadores_10)
 
 
-# pela read.table precisamos especificar o separador e o cabeçalho
+# pela read.table precisamos especificar o separador e o cabecalho
 trabalhadores_15 <- read.table(URL_trabalhadores, header = TRUE, sep = ",", nrows = 15)
 print(trabalhadores_15)
 
 
 
 ### Banco de dados
-# não faremos aqui
-# sintaxe para o SQLite
+# nao faremos aqui
+# mostraremos apenas a sintaxe para o SQLite
+
 # Instalar pacotes
-install.packages("DBI")
-install.packages("RSQLite")
+if(!require(DBI)) install.packages('DBI')
+if(!require(RSQLite)) install.packages('RSQLite')
 
 # Carregar pacotes
 library(DBI)
@@ -151,7 +157,7 @@ dbDisconnect(conexao)
 
 ### formato json
 # Instalando e carregando o pacote
-install.packages("jsonlite")
+if(!require(jsonlite)) install.packages('jsonlite')
 library(jsonlite)
 
 # Importando o arquivo JSON
@@ -162,9 +168,9 @@ print(dados_json_url)
 
 
 
-################ TEMA 04 –  SAÍDA DE DADOS ##################################### 
+################ TEMA 04 - SAIDA DE DADOS ##################################### 
 
-### função write.csv
+### funcao write.csv
 # Criando um primeiro dataframe de exemplo
 dados_df <- data.frame(
   Nome = c("Ana", "Maria", "Pedro"),
@@ -173,7 +179,7 @@ dados_df <- data.frame(
 )
 
 # Exportando para CSV
-caminho_arquivo_csv <- "C:/Users/fiasi/OneDrive/TCD - Linguagem de Prog Aplicada R/aula_04/dados_df_csv.csv"
+caminho_arquivo_csv <- "dados_df_csv.csv"
 write.csv(dados_df, file = caminho_arquivo_csv, row.names = FALSE)
 
 # conferindo se o arquivo foi salvo corretamente
@@ -181,22 +187,22 @@ read.table(caminho_arquivo_csv, header = TRUE, sep = ",")
 
 
 # Exportando para xlsx
-caminho_arquivo_xlsx <- "C:/Users/fiasi/OneDrive/TCD - Linguagem de Prog Aplicada R/aula_04/dados_df_xlsx.xlsx"
+caminho_arquivo_xlsx <- "dados_df_xlsx.xlsx"
 write.xlsx(dados_df, file = caminho_arquivo_xlsx)
 
 # conferindo se o arquivo foi salvo corretamente
 read.xlsx(caminho_arquivo_xlsx, colNames = TRUE, sep = ",")
 
 
-# múltiplas planilhas
+# multiplas planilhas
 # Criando um segundo dataframe
 dados_2 <- data.frame(
   Produto = c("Caneta", "Papel", "Borracha"),
   Quantidade = c(10, 15, 8)
 )
 
-# Exportando para Excel com múltiplas planilhas
-caminho_arquivo_xlsx_2 <- "C:/Users/fiasi/OneDrive/TCD - Linguagem de Prog Aplicada R/aula_04/dados_df_xlsx_2.xlsx"
+# Exportando para Excel com multiplas planilhas
+caminho_arquivo_xlsx_2 <- "dados_df_xlsx_2.xlsx"
 write.xlsx(list(Plan1 = dados_df, Plan2 = dados_2), 
            file = caminho_arquivo_xlsx_2)
 
@@ -205,7 +211,7 @@ read.xlsx(caminho_arquivo_xlsx_2, colNames = TRUE, sep = ",", sheet = 2)
 
 
 # Exportando para JSON
-caminho_arquivo_json <- "C:/Users/fiasi/OneDrive/TCD - Linguagem de Prog Aplicada R/aula_04/dados_df_json.json"
+caminho_arquivo_json <- "dados_df_json.json"
 write_json(dados_df, path = caminho_arquivo_json) 
 
 # conferindo se o arquivo foi salvo corretamente
@@ -215,13 +221,13 @@ read_json(caminho_arquivo_json, colNames = TRUE, sep = ",")
 
 
 
-################ TEMA 05 –  CARREGANDO DATASETS DO R ########################### 
+################ TEMA 05 - CARREGANDO DATASETS DO R ########################### 
 
-### consulta quais datasets estão disponíveis
+### consulta quais datasets estao disponiveis
 library(help = "datasets")
 # ou data()
 
-# Datasets de pacotes específicos 
+# Datasets de pacotes especificos 
 data(package = "nlme")
 
 # usando um dataset e verificando sua estrutura
@@ -229,7 +235,7 @@ data("mtcars")
 str(mtcars)
 
 head(mtcars) # as 6 primeiras linhas
-?mtcars # documentação
+?mtcars # documentacao
 
 
 ### datasets mais famosos
