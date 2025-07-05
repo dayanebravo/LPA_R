@@ -1,39 +1,47 @@
 ---
-title: "aula_05_pratica"
-author: "Prof. Dayane Bravo"
-output: html_document
+title: "Aula Prática 05"
+author: "Profª Dayane Bravo"
+output:
+  pdf_document: default
+  html_document: default
 ---
 
-```{r setup}
-knitr::opts_chunk$set(echo = FALSE, eval=FALSE)
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE, eval = FALSE)
 ```
 
-## Aula Prática 05
-
-### 1. Você é analista de vendas e precisa enviar um relatório mensal atualizado.
-Importe o arquivo CSV de **vendas** do [Github](https://raw.githubusercontent.com/dayanebravo/LPA_R/refs/heads/main/aula_05/vendas.csv)
-
-Crie um documento dinâmico que:
-
-    Calcule automaticamente o total de vendas, o produto mais vendido e a média por região.
-    Gere um gráfico de barras das vendas por categoria.
-    Dica: Use read.csv() para importar os dados e ggplot2 para os gráficos.
 
 
-[Resolução](https://github.com/dayanebravo/LPA_R/blob/main/aula_05/aula_05_pratica_ex1.Rmd)
+1. Você é analista de vendas e precisa enviar um relatório mensal atualizado.
+
+    Importe o arquivo CSV de **vendas** do \href{https://raw.githubusercontent.com/dayanebravo/LPA_R/main/aula_05/vendas.csv}{\textcolor{blue}{Github}}
+
+    Crie um documento dinâmico que:
+
+- Calcule automaticamente o total de vendas, o produto mais vendido e a média por região.
+- Gere um gráfico de barras das vendas por categoria.
+
+- **Dica**: Use read.csv() para importar os dados e ggplot2 para os gráficos.
+
+
+    \href{https://github.com/dayanebravo/LPA_R/blob/main/aula_05/aula_05_pratica_ex1.Rmd}{\textcolor{blue}{Resolução}}
 
 
 
+#
 
-### 2. Você é um professor que precisa gerar boletins individuais para alunos.
-Importe o arquivo CSV de **notas** do [Github](https://raw.githubusercontent.com/dayanebravo/LPA_R/refs/heads/main/aula_05/notas.csv)
+
+
+2. Você é um professor que precisa gerar boletins individuais para alunos.
+
+    Importe o arquivo CSV de **notas** do \href{https://raw.githubusercontent.com/dayanebravo/LPA_R/refs/heads/main/aula_05/notas.csv}{\textcolor{blue}{Github}}
     
-Crie um documento dinâmico que:
+    Crie um documento dinâmico que:
 
-    Para cada aluno, calcule a média geral e status (Aprovado/Reprovado).
-    Insira um gráfico de linha com o desempenho ao longo do bimestres.
+- Para cada aluno, calcule a média geral e status (Aprovado (se >=7) e Reprovado caso contrário).
+- Insira um gráfico de linha com o desempenho ao longo do bimestres para cada aluno.
 
 
-[Resolução](https://github.com/dayanebravo/LPA_R/blob/main/aula_05/aula_05_pratica_ex2.Rmd)
+    \href{https://github.com/dayanebravo/LPA_R/blob/main/aula_05/aula_05_pratica_ex2.Rmd}{\textcolor{blue}{Resolução}}
 
 
