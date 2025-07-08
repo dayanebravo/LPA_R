@@ -1,32 +1,17 @@
-# =============================================================================
-# APLICATIVO SHINY - ANÁLISE DE NOTAS DOS ALUNOS
-# =============================================================================
-
-# Verificar e instalar pacotes necessários se não estiverem instalados
 if (!require(shiny)) install.packages("shiny")
 if (!require(ggplot2)) install.packages("ggplot2")
 if (!require(dplyr)) install.packages("dplyr")
 if (!require(tidyr)) install.packages("tidyr")
 
-# Carregar as bibliotecas necessárias
 library(shiny)      # Para criar aplicativos web interativos
 library(ggplot2)    # Para criar gráficos elegantes
 library(dplyr)      # Para manipulação de dados
 library(tidyr)      # Para reorganizar dados (wide/long format)
 
-# =============================================================================
-# PREPARAÇÃO DOS DADOS
-# =============================================================================
 
-# Criação do dataset de notas dos alunos
-# Cada linha representa um aluno e suas notas nos 4 bimestres
-notas <- data.frame(
-  aluno = c("Ana Silva", "Carlos Oliveira", "Maria Souza", "Joao Santos", "Laura Lima"),
-  bimestre1 = c(7.5, 5.0, 8.0, 4.5, 9.0),
-  bimestre2 = c(8.0, 6.5, 7.5, 5.0, 8.5),
-  bimestre3 = c(6.5, 7.0, 9.0, 6.0, 9.5),
-  bimestre4 = c(9.0, 8.5, 8.5, 7.0, 10.0)  
-)
+# Dados das notas
+notas <- read.csv("https://raw.githubusercontent.com/dayanebravo/LPA_R/refs/heads/main/aula_06/notas.csv")
+
 
 # Calcular estatísticas adicionais para cada aluno
 notas <- notas %>%
@@ -37,9 +22,8 @@ notas <- notas %>%
     status = ifelse(media >= 7.0, "Aprovado", "Reprovado")
   )
 
-# =============================================================================
-# INTERFACE DO USUÁRIO (UI)
-# =============================================================================
+
+####### INTERFACE DO USUÁRIO (UI)
 
 ui_notas <- fluidPage(
   # Título principal da aplicação
@@ -131,9 +115,9 @@ ui_notas <- fluidPage(
   )
 )
 
-# =============================================================================
-# LÓGICA DO SERVIDOR (SERVER)
-# =============================================================================
+
+######## LÓGICA DO SERVIDOR (SERVER)
+
 
 server_notas <- function(input, output) {
   
@@ -157,9 +141,9 @@ server_notas <- function(input, output) {
     return(dados)
   })
   
-  # ==========================================================================
+
   # SAÍDA 1: TABELA DE NOTAS
-  # ==========================================================================
+
   output$tabela_notas <- renderTable({
     # Pegar dados filtrados e formatar para exibição
     dados_filtrados() %>%
@@ -181,9 +165,9 @@ server_notas <- function(input, output) {
   bordered = TRUE    # Bordas na tabela
   )
   
-  # ==========================================================================
+
   # SAÍDA 2: GRÁFICO DE EVOLUÇÃO DAS NOTAS
-  # ==========================================================================
+
   output$grafico_evolucao <- renderPlot({
     # Transformar dados de formato wide para long para o ggplot
     dados_long <- dados_filtrados() %>%
@@ -216,9 +200,9 @@ server_notas <- function(input, output) {
             plot.title = element_text(hjust = 0.5, size = 14)) # Título centralizado
   })
   
-  # ==========================================================================
+
   # SAÍDA 3: GRÁFICO DE MÉDIAS
-  # ==========================================================================
+
   output$grafico_medias <- renderPlot({
     # Criar gráfico de barras com as médias
     ggplot(dados_filtrados(), aes(x = reorder(aluno, media), y = media, 
@@ -239,9 +223,11 @@ server_notas <- function(input, output) {
             plot.title = element_text(hjust = 0.5, size = 14))
   })
   
-  # ==========================================================================
+
+  
   # SAÍDA 4: GRÁFICO DE STATUS (PIZZA)
-  # ==========================================================================
+
+  
   output$grafico_status <- renderPlot({
     # Calcular contagem por status
     resumo_status <- dados_filtrados() %>%
@@ -268,9 +254,9 @@ server_notas <- function(input, output) {
             legend.position = "none")            # Remove legenda (info está no gráfico)
   })
   
-  # ==========================================================================
+
   # SAÍDA 5: ESTATÍSTICAS GERAIS
-  # ==========================================================================
+
   output$estatisticas_gerais <- renderText({
     dados <- dados_filtrados()
     
@@ -289,12 +275,12 @@ server_notas <- function(input, output) {
     
     # Formatar saída como texto
     paste(
-      "=== ESTATÍSTICAS GERAIS ===\n",
+      "ESTATÍSTICAS GERAIS\n",
       sprintf("Total de alunos: %d", stats$total_alunos), "\n",
       sprintf("Aprovados: %d", stats$aprovados), "\n", 
       sprintf("Reprovados: %d", stats$reprovados), "\n",
       sprintf("Taxa de aprovação: %s%%", stats$taxa_aprovacao), "\n\n",
-      "=== MÉDIAS ===\n",
+      "MÉDIAS\n",
       sprintf("Média geral da turma: %s", stats$media_geral), "\n",
       sprintf("Maior média: %s (%s)", stats$maior_media, stats$aluno_maior_media), "\n",
       sprintf("Menor média: %s (%s)", stats$menor_media, stats$aluno_menor_media),
@@ -303,9 +289,6 @@ server_notas <- function(input, output) {
   })
 }
 
-# =============================================================================
-# EXECUTAR O APLICATIVO
-# =============================================================================
 
-# Combinar UI e Server e executar o aplicativo Shiny
+######## EXECUTAR O APLICATIVO
 shinyApp(ui = ui_notas, server = server_notas)
