@@ -1,55 +1,62 @@
 ---
-title: "aula_06_pratica"
-author: "Prof. Dayane Bravo"
-output: html_document
+title: "Aula Prática 06"
+author: "Profª Dayane Bravo"
+output:
+  pdf_document: default
+  html_document: default
 ---
 
-```{r setup}
-knitr::opts_chunk$set(echo = FALSE, eval=FALSE)
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE, eval = FALSE)
 ```
 
-## Aula Prática 06
-
-### 1. Você é analista de vendas e precisa criar um relatório dinâmico.
-Importe o arquivo CSV de **vendas** do [Github](https://raw.githubusercontent.com/dayanebravo/LPA_R/refs/heads/main/aula_05/vendas.csv)
-
-Crie um documento dinâmico que:
-
-    Exiba a tabela de vendas e um gráfico de vendas por produto
-    Crie uma barra de seleção que permita filtrar os itens acima por região
-    Crie um gráfico de setores com as vendas por região
-    Exiba um aviso neste gráfico quando a caixa deseleção for diferente de "Todas"
-    Dica: Utilize shiny
 
 
-[Resolução](https://raw.githubusercontent.com/dayanebravo/LPA_R/refs/heads/main/aula_06/aula_06_pratica_ex1.R)
+1. Você é analista de vendas e precisa criar um relatório dinâmico.
+
+    Importe o arquivo CSV de **vendas** do \href{https://raw.githubusercontent.com/dayanebravo/LPA_R/main/aula_06/vendas.csv}{\textcolor{blue}{Github}}
 
 
+    Crie um documento dinâmico que:
 
-### 2.Você é um professor e precisa criar um relatório dinâmico.
-Importe o arquivo CSV de **notas** do [Github](https://raw.githubusercontent.com/dayanebravo/LPA_R/refs/heads/main/aula_05/notas.csv)
+- Exiba a tabela de vendas e um gráfico de barras com o total de vendas por produto
+- Crie uma barra de seleção que permita filtrar as vendas por região
+- Crie um gráfico de setores com as vendas por região
+- Exiba um aviso neste gráfico quando a caixa de seleção for diferente de "Todas"
+- **Dica**: Utilize shiny
 
-Crie um documento dinâmico que:
 
-    Crie uma aplicação que exiba 3 abas:
-    Tabela de notas, Desempenho por aluno e Análise geral
-    Crie uma barra de seleção que permita filtrar os itens acima por aluno e por status
-    Crie um checkbox para exibir ou não estatísticas detalhadas
-    Crie uma seção de informações com Média ≥ 7.0: Aprovado, Média < 7.0: Reprovado e Notas de 0 a 10
+    \href{https://github.com/dayanebravo/LPA_R/blob/main/aula_06/aula_06_pratica_ex1.R}{\textcolor{blue}{Resolução}}
+
+#
+
+2. Você é um professor e precisa criar um relatório dinâmico.
+
+    Importe o arquivo CSV de **notas** do \href{https://raw.githubusercontent.com/dayanebravo/LPA_R/refs/heads/main/aula_06/notas.csv}{\textcolor{blue}{Github}}
     
-    Na aba tabela de notas exiba a tabela e inclua a média e status de cada aluno
-    
-    Na aba desempenho por aluno:
-    Crie um grafico de desempenho por bimestre de todos os alunos
-    Crie um grafico de comparação das médias
-    
-    Na aba análise geral:
-    Crie um gráfico de setores com os status e estatísticas gerais com
-    Total de alunos, quantidade de aprovados e reprovados, taxa de aprovação
-    Média geral da turma, Maior média, Menor média
-    
-    Dica: Utilize shiny
+    Crie um documento dinâmico que:
+
+- Crie uma aplicação que exiba **3 abas**:
+
+- Na **aba tabela de notas** exiba a tabela e inclua a média e status de cada aluno
+- Tabela de notas, Desempenho por aluno e Análise geral
+- Crie uma barra de seleção que permita filtrar os itens acima por aluno e por status
+- Crie um checkbox para exibir ou não estatísticas detalhadas
+- Crie uma seção de informações com Média >= 7.0: Aprovado, Média < 7.0: Reprovado e Notas de 0 a 10
+ 
+ 
+- Na **aba desempenho por aluno**:
+- Crie um grafico de desempenho por bimestre de todos os alunos
+- Crie um grafico de comparação das médias
+
+ 
+- Na **aba análise geral**:
+- Crie um gráfico de setores com os status e estatísticas gerais com
+- Total de alunos, quantidade de aprovados e reprovados, taxa de aprovação
+- Média geral da turma, Maior média, Menor média
+
+- **Dica**: Utilize shiny
 
 
-[Resolução](https://raw.githubusercontent.com/dayanebravo/LPA_R/refs/heads/main/aula_06/aula_06_pratica_ex2.R)
+    \href{https://github.com/dayanebravo/LPA_R/blob/main/aula_06/aula_06_pratica_ex2.R}{\textcolor{blue}{Resolução}}
 
