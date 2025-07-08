@@ -1,89 +1,158 @@
-if(!require(shiny)) install.packages('shiny')
-if(!require(ggplot2)) install.packages('ggplot2')
-if(!require(dplyr)) install.packages('dplyr')
-library(shiny)
-library(ggplot2)
-library(dplyr)
+if (!require(shiny)) install.packages("shiny")
+if (!require(ggplot2)) install.packages("ggplot2")
+if (!require(dplyr)) install.packages("dplyr")
+if (!require(tidyr)) install.packages("tidyr")
 
-# Dados de vendas (poderia ser lido de um arquivo CSV)
-vendas <- read.csv("https://raw.githubusercontent.com/dayanebravo/LPA_R/refs/heads/main/aula_05/vendas.csv")
+library(shiny)      # Para criar aplicativos web interativos
+library(ggplot2)    # Para criar gráficos elegantes
+library(dplyr)      # Para manipulação de dados
+library(tidyr)      # Para reorganizar dados (wide/long format)
+
+# Dados de vendas
+vendas <- read.csv("https://raw.githubusercontent.com/dayanebravo/LPA_R/refs/heads/main/aula_06/vendas.csv")
 
 
-# Interface do usuário
+########## INTERFACE DO USUÁRIO (UI)
+
+# Define a interface do usuário usando fluidPage (layout responsivo)
 ui_vendas <- fluidPage(
+  
+  # TÍTULO PRINCIPAL da aplicação
   titlePanel("Análise de Vendas Interativa"),
   
+  # LAYOUT PRINCIPAL: Divide a página em barra lateral + painel principal
   sidebarLayout(
+    
+    # BARRA LATERAL (SIDEBAR) - Controles de entrada do usuário
     sidebarPanel(
-      selectInput("regiao", 
-                  "Selecione a região:", 
-                  choices = c("Todas", unique(vendas$regiao)))
+      
+      # CONTROLE DE ENTRADA: Dropdown para seleção de região
+      selectInput("regiao",                                    # ID do input (usado no server)
+                  "Selecione a região:",                       # Rótulo exibido ao usuário
+                  choices = c("Todas", unique(vendas$regiao))) # Opções: "Todas" + regiões únicas dos dados
     ), 
     
+    # PAINEL PRINCIPAL - Onde serão exibidos os resultados
     mainPanel(
-      h3("Tabela de Vendas"),
-      tableOutput("tabela"),
       
-      h3("Gráfico de Vendas por Produto"),
-      plotOutput("grafico_barras"),
+      # SEÇÃO 1: TABELA DE DADOS
+      h3("Tabela de Vendas"),              
+      tableOutput("tabela"),               # Placeholder para tabela (ID: "tabela")
       
-      h3("Total de Vendas por Região"),
-      plotOutput("grafico_setores")
+      # SEÇÃO 2: GRÁFICO DE BARRAS
+      h3("Gráfico de Vendas por Produto"), 
+      plotOutput("grafico_barras"),        # Placeholder para gráfico (ID: "grafico_barras")
+      
+      # SEÇÃO 3: GRÁFICO DE SETORES (PIZZA)
+      h3("Total de Vendas por Região"),    
+      plotOutput("grafico_setores")        # Placeholder para gráfico (ID: "grafico_setores")
     )
   )
 )
 
-# Lógica do servidor
+
+##########  LÓGICA DO SERVIDOR (SERVER)
+
+# Define a lógica do servidor - onde ocorre o processamento dos dados
 server_vendas <- function(input, output) {
   
-  # Filtra os dados com base na seleção
+  # FUNÇÃO REATIVA: Filtra os dados baseado na seleção do usuário
+  # Reactive() cria uma função que se atualiza automaticamente quando inputs mudam
   dados_filtrados <- reactive({
+    
+    # CONDICIONAL: Verifica qual região foi selecionada
     if (input$regiao == "Todas") {
+      # Se "Todas" foi selecionado, retorna todos os dados
       vendas
     } else {
-      filter(vendas, regiao == input$regiao)
+      # Se uma região específica foi selecionada, filtra os dados
+      filter(vendas, regiao == input$regiao)  # Usa dplyr::filter()
     }
   })
   
-  # Tabela de vendas
+
+  # SAÍDA 1: TABELA DE VENDAS
+  # Renderiza a tabela que será exibida no UI
   output$tabela <- renderTable({
-    dados_filtrados() %>%
-      mutate(Total = valor * quantidade)
+    
+    # Pega os dados filtrados e adiciona uma coluna "Total"
+    dados_filtrados() %>%                    # Chama a função reativa
+      mutate(Total = valor * quantidade)     # Cria nova coluna: valor × quantidade
   })
   
-  # Gráfico de barras
+
+  # SAÍDA 2: GRÁFICO DE BARRAS
+  # Renderiza o gráfico de barras
   output$grafico_barras <- renderPlot({
+    
+    # Armazena os dados filtrados em uma variável local
     dados <- dados_filtrados()
     
-    ggplot(dados, aes(x = produto, y = valor * quantidade, fill = produto)) +
-      geom_bar(stat = "identity") +
-      labs(title = paste("Vendas em", ifelse(input$regiao == "Todas", "Todas as Regiões", input$regiao)),
-           y = "Valor Total (R$)", x = "") +
+    # Cria o gráfico usando ggplot2
+    ggplot(dados, aes(x = produto,                    # Eixo X: produtos
+                      y = valor * quantidade,          # Eixo Y: valor total (valor × quantidade)
+                      fill = produto)) +               # Cor de preenchimento: por produto
+      
+      # Adiciona barras ao gráfico
+      geom_bar(stat = "identity") +                   # stat="identity" usa os valores como estão
+      
+      # Configura rótulos e títulos
+      labs(title = paste("Vendas em", 
+                         ifelse(input$regiao == "Todas", 
+                                "Todas as Regiões", 
+                                input$regiao)),          # Título dinâmico baseado na seleção
+           y = "Valor Total (R$)",                    # Rótulo do eixo Y
+           x = "") +                                  # Eixo X sem rótulo
+      
+      # Aplica tema minimalista
       theme_minimal() +
-      theme(axis.text.x = element_text(angle = 45, hjust = 1),
-            legend.position = "none")
+      
+      # Personalizações do tema
+      theme(axis.text.x = element_text(angle = 45, hjust = 1),  # Texto do eixo X inclinado 45°
+            legend.position = "none")                           # Remove a legenda
   })
   
-  # Gráfico de setores (apenas quando "Todas" as regiões estão selecionadas)
+
+  # SAÍDA 3: GRÁFICO DE SETORES (PIZZA)
+  # Renderiza o gráfico de setores
   output$grafico_setores <- renderPlot({
+    
+    # CONDICIONAL: Só mostra o gráfico se "Todas" as regiões estiverem selecionadas
     if (input$regiao == "Todas") {
-      resumo <- vendas %>%
-        group_by(regiao) %>%
-        summarise(Total = sum(valor * quantidade), .groups = 'drop') 
       
-      ggplot(resumo, aes(x = "", y = Total, fill = regiao)) +
-        geom_bar(width = 1, stat = "identity") +
-        coord_polar("y", start = 0) +
+      # PREPARAÇÃO DOS DADOS: Agrupa por região e soma os valores
+      resumo <- vendas %>%                            # Usa dados originais (não filtrados)
+        group_by(regiao) %>%                          # Agrupa por região
+        summarise(Total = sum(valor * quantidade),    # Soma o valor total por região
+                  .groups = 'drop')                   # Remove agrupamento após summarise
+      
+      # CRIAÇÃO DO GRÁFICO DE PIZZA
+      ggplot(resumo, aes(x = "",                      # X vazio (necessário para coord_polar)
+                         y = Total,                    # Y: valores totais
+                         fill = regiao)) +             # Cor: por região
+        
+        # Cria barras que serão transformadas em setores
+        geom_bar(width = 1, stat = "identity") +      # width=1 para pizza completa
+        
+        # TRANSFORMAÇÃO EM PIZZA: Converte coordenadas cartesianas em polares
+        coord_polar("y", start = 0) +                 # "y" indica que o eixo Y vira ângulo
+        
+        # Configurações visuais
         labs(title = "Distribuição de Vendas por Região") +
-        theme_void()
+        theme_void()                                  # Remove eixos, grid e fundo
+      
     } else {
-      # Retorna um gráfico vazio quando uma região específica está selecionada
-      ggplot() + 
-        geom_text(aes(x = 0, y = 0, label = "Selecione 'Todas' para ver este gráfico")) +
-        theme_void()
+      # CASO ALTERNATIVO: Quando uma região específica está selecionada
+      # Mostra uma mensagem informativa em vez do gráfico de pizza
+      
+      ggplot() +                                      # Gráfico vazio
+        geom_text(aes(x = 0, y = 0,                   # Posição central
+                      label = "Selecione 'Todas' para ver este gráfico")) +  # Mensagem
+        theme_void()                                  # Tema limpo
     }
   })
 }
 
-# Executa o aplicativo
+
+###########  Executa o aplicativo
 shinyApp(ui = ui_vendas, server = server_vendas)
