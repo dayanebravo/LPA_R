@@ -1,0 +1,48 @@
+---
+title: "Relatório de Vendas Mensais"
+output:
+  pdf_document: default
+  html_document: default
+date: "`r format(Sys.Date(), '%d/%m/%Y')`"
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = F, eval = T)
+```
+
+
+```{r importar_dados}
+vendas <- read.csv("https://raw.githubusercontent.com/dayanebravo/LPA_R/refs/heads/main/aula_05/Aulas_Praticas/vendas.csv")
+#vendas <- read.csv("vendas.csv")
+```
+
+### Dados Resumidos
+- O **total de vendas** até a data de `r format(Sys.Date(), '%d/%m/%Y')` foi de R$ `r sum(vendas$valor*vendas$quantidade)`.
+- **Produto mais vendido**: `r vendas$produto[which.max(vendas$quantidade)]`  
+- **Média por região**:  
+
+```{r media_regiao}
+# Criar uma nova coluna com valor total
+vendas$valor_total <- vendas$valor * vendas$quantidade
+
+# Calcular a média do valor total por região
+media_por_regiao <- aggregate(valor_total ~ regiao, data = vendas, FUN = mean)
+
+# Arredondar para zero casas decimais
+media_por_regiao$valor_total <- round(media_por_regiao$valor_total, 0)
+
+# Visualizar resultado
+media_por_regiao
+```
+
+### Gráfico de Vendas por Categoria
+```{r grafico_vendas}
+library(ggplot2)
+ggplot(vendas, aes(x = produto, y = valor * quantidade, fill = regiao)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Vendas por Produto e Região", y = "Valor Total (R$)") +
+  theme_minimal()
+```
+
+**Observações**:  
+O relatório foi atualizado automaticamente em `r format(Sys.time(), '%d/%m/%Y %H:%M')`.  

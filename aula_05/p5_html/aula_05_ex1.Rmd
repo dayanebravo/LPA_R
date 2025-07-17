@@ -1,0 +1,21 @@
+---
+title: "Análise Simples"
+output: html_document
+---
+
+## Análise de Números Aleatórios
+
+Geramos 20 números aleatórios entre 0 e 1:
+
+```{r numeros}
+dados <- round(runif(20, 0, 1), 2)
+dados
+```
+
+A média dos valores é `r mean(dados)`.
+
+O histograma abaixo mostra a distribuição:
+
+```{r hist, echo = FALSE}
+hist(dados, main = "Distribuição dos Valores")
+```

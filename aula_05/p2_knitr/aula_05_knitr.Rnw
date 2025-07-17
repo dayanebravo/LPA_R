@@ -1,0 +1,25 @@
+\documentclass{article}
+
+\begin{document}
+%Terceira linha pré-definida deve ser removida
+
+\title{Meu primeiro relatório Sweave - pelo Knitr}
+\author{Profª Dayane}
+\date{}
+\maketitle
+
+Aqui escrevemos um texto.
+
+\section{Aqui iniciamos um capítulo}
+
+<<nome_do_bloco, echo=TRUE>>=
+
+# Aqui inicia o código:
+x <- rnorm(100)
+summary(x)
+# Aqui encerra o código.
+
+@
+
+\end{document}
+

@@ -1,0 +1,51 @@
+---
+title: "Aula Prática 05"
+author: "Profª Dayane Bravo"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE, eval = FALSE)
+```
+
+
+Lembre de instalar o Latex no sistema operacional!
+Recomendamos o https://www.tug.org/texlive/
+A instalação pode levar algumas **horas**!!!
+
+
+1. Você é analista de vendas e precisa enviar um relatório mensal atualizado.
+
+    Importe o arquivo CSV de **vendas** do \href{https://raw.githubusercontent.com/dayanebravo/LPA_R/main/aula_05/Aulas_Praticas/vendas.csv}{\textcolor{blue}{Github}}
+
+    Crie um documento dinâmico que:
+
+- Calcule automaticamente o total de vendas, o produto mais vendido e a média por região.
+- Gere um gráfico de barras das vendas por categoria.
+
+- **Dica**: Use read.csv() para importar os dados e ggplot2 para os gráficos.
+
+
+    \href{https://github.com/dayanebravo/LPA_R/blob/main/aula_05/Aulas_Praticas/aula_05_pratica_ex1.Rmd}{\textcolor{blue}{Resolução}}
+
+
+
+#
+
+
+
+2. Você é um professor que precisa gerar boletins individuais para alunos.
+
+    Importe o arquivo CSV de **notas** do \href{https://raw.githubusercontent.com/dayanebravo/LPA_R/refs/heads/main/aula_05/Aulas_Praticas/notas.csv}{\textcolor{blue}{Github}}
+    
+    Crie um documento dinâmico que:
+
+- Para cada aluno, calcule a média geral e status (Aprovado (se >=7) e Reprovado caso contrário).
+- Insira um gráfico de linha com o desempenho ao longo do bimestres para cada aluno.
+
+
+    \href{https://github.com/dayanebravo/LPA_R/blob/main/aula_05/Aulas_Praticas/aula_05_pratica_ex2.Rmd}{\textcolor{blue}{Resolução}}
+
+
