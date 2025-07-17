@@ -10,6 +10,9 @@ output:
 knitr::opts_chunk$set(echo = FALSE, eval = FALSE)
 ```
 
+Lembre de instalar o Latex no sistema operacional!
+Recomendamos o https://www.tug.org/texlive/
+A instalação pode levar algumas **horas**!!!
 
 
 1. Você é analista de vendas e precisa enviar um relatório mensal atualizado.
