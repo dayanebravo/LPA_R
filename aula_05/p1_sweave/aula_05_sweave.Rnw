@@ -9,6 +9,9 @@
 \maketitle
 
 Aqui escrevemos um texto.
+Para compilar esse documento é necessário instalar o Latex no seu SO.
+Recomendamos o https://www.tug.org/texlive/
+A instalação pode levar algumas horas!!!
 
 \section{Aqui iniciamos um capítulo}
 
